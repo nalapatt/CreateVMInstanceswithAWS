@@ -1,0 +1,41 @@
+#This document shows how to transfer files from your local desktop to the AWS VM
+
+If you want a more user-friendly tool to transfer data, FileZilla is a good choice. 
+
+It is free, it supports Windows/Linux/Mac systems, and it has a good user interface. It supports FTP, SFTP and other file transfer protocols.
+
+Firstly, go to ‘https://filezilla-project.org/‘ and click “Download FileZilla Client” button to download it.
+
+If you want to use FileZila to upload to or download data from a normal FTP server if you have the user and password
+
+just put the information in the “Host”, “Username”, “Password” box and connect. 
+
+However for Amazon instance, we use key-pair to log in instead of password for better safety. So it is a little bit more complicated to configure.
+
+Open “Settings” and click “SFTP”
+
+Click “Add keyfile...”:
+
+Then select the ”.pem” file you used to connect to Amazon instance with ssh.
+
+You will see the a private key has been added.
+
+Close “Settings” and go back to the main interface.
+
+Click button to open the site manager.
+
+Click “New Site”.
+
+Put the Amazon instance URL like ec2-54-166-128-20.compute-1.amazonaws.com in the “Host” box.
+
+Set “Protocol” as “SFTP”, “Logon Type” as “Normal”, “User” as “ubuntu” and leave “Password” as blank. Then click “Connect”.
+
+There will be a dialogue box to ask you about “Unknown host key”, just click “Ok”.
+
+All right. Now you have logged in the Amazon instance. 
+
+You can drag and drop to transfer the files between the remote machine and your local laptop.
+
+
+
+
