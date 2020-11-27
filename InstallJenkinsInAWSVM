@@ -1,0 +1,59 @@
+#here you will learn how to install jenkins and use it from your local VM
+Method -
+
+Connect to your master VM
+make sure that it is the master VM and not the slaves
+
+Open up the terminal
+It should go to the prompt yourusername@azure
+
+Type in ssh username@IP_address (which is shown in the command line)
+fingerprint for the first time it will ask you Yes/No 
+Press Yes
+now the prompt should change to username@VMname
+
+Now you can start installing jenkins
+pwd ( this will show the path) 
+
+java -version (to confirm if java is installed)
+if no version,then it is not installed, but it will give you the commands to use to install it
+
+sudo apt-get update
+sudo apt install openjdk-8-jre-headless
+
+java -version (if successful you will see the version here)
+
+install jenkins with these commands
+wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add - (this will start the jenkins download)
+sudo vi /etc/apt/sources.list
+press i (to enter insert mode)
+at the end of the file paste this line (deb https://pkg.jenkins.io/debian-stable binary/)
+press esc and :wq! to save and quit editor
+
+sudo apt-get update
+sudo apt-get install jenkins (press Y to continue)
+
+sudo systemctl status jenkins ( this will check the status of jenkins it is already running ? if inactive go to next step else skip next step)
+sudo systemctl enable jenkins 
+
+now open a new tab on your browser
+
+your VM's public IP address)
+ubuntu@ec2-xx-xxx-xxx-xxx.compute-1.amazonaws.com:8080
+
+This will take you to the Unlock Jenkins page
+
+Copy the path and go back to your terminal
+sudo cat pathname (that you copied from the unlock jenkins page)
+this will display a long password
+copy that and go back to the unlock jenkins page and paste it in the password (make sure it is copied correctly without any extra spaces)
+
+if correct it should go into the customize jenkins page
+
+click on install suggested plugins
+create a new admin user - you can enter your details here 
+
+start using jenkins
+Hurray you are in Jenkins
+
+
