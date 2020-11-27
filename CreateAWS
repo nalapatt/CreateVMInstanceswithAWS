@@ -1,0 +1,81 @@
+#Create an account in AWS, opt for the free one, they give you $200 in free credit and this credit should be enough to cover the amount
+#you will use as a student
+
+Method - Create a new free account in AWS , memorize or write down your username and password
+Sign in to the the account 
+
+#Create a new resource group which will contain your new VM
+Method - 
+Go to Build a solution -
+Get started with simple wizards and automated workflows.
+Launch a virtual machine
+With EC2 - Click this
+Step 1: Choose an Amazon Machine Image (AMI)
+I chose the ubuntu
+
+Free tier eligible
+Select
+64-bit (x86)
+64-bit (Arm)
+Ubuntu Server 18.04 LTS (HVM), SSD Volume Type
+
+I just chose the defaults and pressed next till I reached step 6
+
+Step 6: Configure Security Group
+
+Create a new security group
+
+Give a new Security group name:jenkins_wizard_6
+new Description:jenkis_VM
+
+Press Add Rule Choose Custom TCP and add 8080 as the Port
+Press Next and Review and Launch
+
+It will give a security warning ignore it 
+	
+it takes you to a new window 
+Select an existing key pair or create a new key pair
+Create a new key pair: Give a new name yourname_key
+
+Press the Download Key Pair ( this is very important you can do this only once)(save it in a safe place)
+select the I have read box and click launch
+
+Yes you have created your new instance
+Now if you go to EC2 it will take you to your running instance , you can edit the name of the instance- I made mine jenkins_master and clicked save)
+
+Now do this same thing two more times to create a total of 3 instances - I created a jenkins_master and a slave1 and slave 2
+
+After creating all of them 
+Click the instance you want to connect to and click the connect button
+this will take you to the 
+
+EC2 Instance ID
+
+i-xxxxxxxx (JenkinsSlave1)
+Open an SSH client.
+Locate your private key file. The key used to launch this instance is aws_jenkins_key.pem
+Run this command, if necessary, to ensure your key is not publicly viewable.
+
+chmod 400 aws_jenkins_key.pem
+Connect to your instance using its Public DNS:
+ec2-xx-xxx-xxx-xxx.compute-1.amazonaws.com
+
+Example:
+ssh -i "aws_jenkins_key.pem" ubuntu@ec2-xx-xxx-xxx-xxx.compute-1.amazonaws.com
+
+Go to your desktop terminal 
+cd Downloads 
+See if your aws_jenkins_key.pem is there
+
+type chmod 400 aws_jenkins_key.pem
+ssh -i "aws_jenkins_key.pem" ubuntu@ec2-xx-xxx-xxx-xxx.compute-1.amaznaws.com
+
+when using for the first time it will ask you "are you sure you want to continue connection yes/no"
+press Yes
+press yes and you will see your terminal prompt to change to ubuntu@IPaddress
+
+Voila - your new vm is ready for use
+
+Ha Ha you have reached so far now your VM is ready for use 
+
+
