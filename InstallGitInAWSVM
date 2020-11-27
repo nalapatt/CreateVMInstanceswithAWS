@@ -1,0 +1,12 @@
+# Update and Install Git on the VM so that we can create a local repo and connect to the remote repo on GitHub 
+Method -
+Use the following commands
+sudo apt-get update (should show Done)
+sudo apt-get install git ( should show Done)
+git --version ( This will show the version of the Git installed if succesful)
+git init (this initializes an empty repo)
+git config --global user.name "yourname" ( enter your username here)
+git config --global user.email "your email here " ( enter your email here)
+git config --list ( this will show your name and email)
+Wow now you are ready to add, commit and push files from this local repo to your remote repo!!!
+
