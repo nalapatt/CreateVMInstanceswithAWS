@@ -1,0 +1,84 @@
+Create an Ubuntu instance in AWS
+Connect to the AWS ec2 instance in your local terminal
+Go to https://www.terraform.io/downloads.html and download the 64 bit download for linux
+Use Filezilla to copy the zip file from Downloads to your home/ubuntu/ folder
+unzip the zip file to create the exe
+mv Terraform /usr/local/bin
+
+terraform -version should give you the version
+ sudo apt-get install awscli
+ sudo apt-get update
+ mkdir s3back
+cd s3back
+git init
+vi creds.tf under s3back and add the code given below:
+
+provider "aws" {
+  access_key = "AWS_ACCESS_KEY" 
+  secret_key = "AWS_SECRET_KEY"
+  region = "us-east-1"
+}
+
+ go back to the AWS console 
+ search for IAM 
+ this will take you to the Identity and Access Management (IAM) console
+ Go to the users tab
+ if not already created , add user - 
+ add User name (give a unique username) 
+ give permissions Programmatic access and AWS Management Console access
+ rest accept defaults
+ Create User
+ Now you will see the access key and the secret key
+ copy these details and change it in the file
+ Press i to insert 
+ 
+ provider "aws" {
+  access_key = "AKIA6GAFKA" ( press the copy and paste it here)
+  secret_key = "SbpvMUREckZ" (press the show and then copy and paste it here)
+  region = "us-east-1"
+}
+
+resource "aws_instance" "example" {
+  ami           = "ami-2757f631"
+  instance_type = "t2.micro"
+}
+
+Esc :wq
+to save and quit
+
+terraform init
+terraform apply
+will create an ec2 instance
+terraform destroy
+to destroy the instance
+
+vi Main.tf
+copy this text here
+
+resource "aws_s3_bucket" "b" {
+  bucket = "my_tf_test_bucketnalapatt"
+}
+
+resource "aws_s3_bucket_policy" "b" {
+  bucket = aws_s3_bucket.b.id
+
+  policy = <<POLICY
+{
+  "Version": "2012-10-17",
+  "Id": "MYBUCKETPOLICY",
+  "Statement": [
+    {
+      "Sid": "IPAllow",
+      "Effect": "Deny",
+      "Principal": "*",
+      "Action": "s3:*",
+      "Resource": "arn:aws:s3:::my_tf_test_bucketnalapatt/*",
+      "Condition": {
+         "IpAddress": {"aws:SourceIp": "8.8.8.8/32"}
+      }
+    }
+  ]
+}
+POLICY
+}
+
