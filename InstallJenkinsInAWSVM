@@ -44,8 +44,11 @@ ubuntu@ec2-xx-xxx-xxx-xxx.compute-1.amazonaws.com:8080
 This will take you to the Unlock Jenkins page
 
 Copy the path and go back to your terminal
-sudo cat pathname (that you copied from the unlock jenkins page)
+to display the contents of this secret password (that you copied from the unlock jenkins page) 
+
+sudo cat /var/lib/jenkins/secrets/initialAdminPassword
 this will display a long password
+
 copy that and go back to the unlock jenkins page and paste it in the password (make sure it is copied correctly without any extra spaces)
 
 if correct it should go into the customize jenkins page
