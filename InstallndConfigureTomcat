@@ -1,0 +1,40 @@
+Download java 
+check if installed java --version
+
+https://tomcat.apache.org/download-80.cgi
+download the tar.gz to get the latest tomcat zip file
+
+Copy the file from the local machine to the VM using filezilla
+
+Unzio the file by typing tar -xvzf apache-tomcat-9.0.41.tar.gz 
+Now you will see the apache-tomcat-9.0.41.tar folder
+cd to apache-tomcat-9.0.41.tar/bin folder and type is ./startup.sh
+it will display Tomcat started.
+your tomcat is started
+
+since both jenkins and tomcat use the same port 8080
+make sure your port_9090 is configured on your VM add inbound rule
+then use the editor vi apache-tomcat-9.0.41.tar/conf/server.xml
+press i for insert and change the connector port from 8080 to 9090 
+vi apache-tomcat-9.0.41.tar/conf/tomcat-users.xml
+just above the bottom </tomcat-users>
+<role rolename=”tomcat”/>
+<role rolename=”manager-gui”/>
+<role rolename=”manager-script”/>
+<user username=”tomcat” password=”password” roles=”tomcat”/>
+<user username=”manager” password=”password” roles=”tomcat,manager-gui”/>
+<user username=”jenkins” password=”jenkins” roles=”tomcat,manager-gui,manager-script”/>
+
+
+Enter the below fields in context.xml located in apache-tomcat-9.0.41.tar/webapps/manager/META-INF/context.xml
+
+<role rolename=”tomcat”/>
+<role rolename=”manager-gui”/>
+<role rolename=”manager-script”/>
+<user username=”tomcat” password=”password” roles=”tomcat”/>
+<user username=”manager” password=”password” roles=”tomcat,manager-gui”/>
+<user username=”jenkins” password=”jenkins” roles=”tomcat,manager-gui,manager-script”/>
+
+
+
+Now go to a new tab in your browser and type in IPaddress:9090 to go to the tomcat page
