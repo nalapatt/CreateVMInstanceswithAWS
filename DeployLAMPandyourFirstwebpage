@@ -1,0 +1,79 @@
+
+Writing Ansible Playbook to deploy LAMP Stack on a remote machine
+
+Create two vms on aws
+Install ansible in master
+Open both vms 
+Ssh to the node machine by 
+Copying the .ssh/id_rsa.pub file to the node .ssh/authorized_keys
+Vi etc/ansible/hosts
+Add 
+[testservers]
+Ipaddress of node ( to find this go to node and type ifconfig)
+
+
+Create these three files in the master 
+
+index.html
+
+
+<!doctype html>
+<html>
+         <font size="+12">This is bigger text.</font>
+  <head>
+    <title>            Ansible project!</title>
+  </head>
+  <body>
+    <p>         HA HA HA HA FIRST WEB PAGE   </body>
+</html>
+~              
+
+
+Deploy.yml
+
+
+---
+- name: copy
+  hosts: testservers
+  become: true
+  become_user: root
+  gather_facts: true
+  tasks:
+    - name: "copy file"
+      copy: src=/home/ubuntu/index.html dest=/var/www/html/index.html
+~                                                                               
+~                                                                               
+~                          
+
+
+Lampstack.yml
+
+---
+- name: install apache & php & mysql
+  hosts: testservers
+  become: true
+  become_user: root
+  gather_facts: true
+  tasks:
+     - name: "Install apache2"
+       package: name=apache2 state=present
+     - name: "Install apache2-php5"
+       package: name=apache2 state=present
+     - name: "Install php-cli"
+       package: name=php-cli state=present
+     - name: "Install php-mcrypt"
+       package: name=php-mcrypt state=present
+     - name: "Install php-gd"
+       package: name=php-gd state=present
+     - name: "Install php-mysql"
+       package: name=php-mysql state=present
+     - name: "Install php-mysqlserver"
+       package: name=php-mysql-server state=present
+
+
+Ansible-playbook lampstack.yml
+Go to the node ec2-xx-xxx-xx-xxx.compute-1.amazonaws.com
+You will see the apache server page
+Ansible-playbook deploy.yml
+Now you will see the ha ha first web page
+Hooray you have deployed your web page 
