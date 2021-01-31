@@ -77,3 +77,53 @@ You will see the apache server page
 Ansible-playbook deploy.yml
 Now you will see the ha ha first web page
 Hooray you have deployed your web page 
+
+Install Jenkins
+Create a pipeline job
+Write this script 
+Use the pipeline syntax generator to get the code, 
+Ansible tool :the name of the ansible you gave in configuration
+Playbook file path in workspace:deploy.yml
+Inventory file path in workspace:dev.ini
+SSH connection credentials:add jenkins
+choose ssh username with private key
+id:private-key(anyname)
+description:deploy(anyname)
+username:nalapatt(anyname)
+private key choose enter directly
+add the aws key you downloaded to create your instance should be in the downloads folder:*.pem file, cat this file
+press add and copy and paste
+now save and then choose the ssh key you just created
+Disable the host SSH key check:check this box 
+save and then generate the script , copy this script and paste into the pipeline script
+
+
+
+use the github https://github.com/nalapatt/myapp-ansible.git
+this contains the dev.ini which has the node server defined, the index.html, the deploy.yml and the lampstack.yml
+
+pipeline {
+    agent any
+
+    stages {
+        
+        stage('Hello checkout') {
+            steps {
+                echo 'Hello checkout'
+                git 'https://github.com/nalapatt/myapp-ansible.git'
+            }
+        }
+        stage('Hello install lamp') {
+            steps {
+                echo 'Hello playbook'
+                ansiblePlaybook credentialsId: 'private-key', disableHostKeyChecking: true, installation: 'nansible', inventory: 'dev.ini', playbook: 'lampstack.yml'
+            }
+        }
+        stage('Hello deploy') {
+            steps {
+                echo 'Hello deploy'
+                ansiblePlaybook credentialsId: 'private-key', disableHostKeyChecking: true, installation: 'nansible', inventory: 'dev.ini', playbook: 'deploy.yml'
+            }
+        }
+    }
+}
