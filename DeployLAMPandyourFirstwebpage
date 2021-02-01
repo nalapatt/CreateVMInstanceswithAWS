@@ -5,7 +5,10 @@ Create two vms on aws
 Install ansible in master
 Open both vms 
 Ssh to the node machine by 
-Copying the .ssh/id_rsa.pub file to the node .ssh/authorized_keys
+ssh-keygen -t rsa (in the master vm)
+this will give a public key ahd private key file 
+Copying the  master vm public key which is .ssh/id_rsa.pub file to the node .ssh/authorized_keys (cat .ssh/id_rsa.pub 
+and copy and paste to node with opening file vi .ssh/authorized_keys and press i to insert)
 Vi etc/ansible/hosts
 Add 
 [testservers]
