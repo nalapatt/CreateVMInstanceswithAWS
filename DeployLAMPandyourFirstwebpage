@@ -2,15 +2,26 @@
 Writing Ansible Playbook to deploy LAMP Stack on a remote machine
 
 Create two vms on aws
+connect to master vm
 Install ansible in master
-Open both vms 
-Ssh to the node machine by 
+sudo apt-get update
+sudo apt-get install software-properties-common
+sudo apt-add-repository ppa:ansible/ansible
+sudo apt-get update
+sudo apt-get install ansible
+command n to clone a terminal 
+connect to node vm  
+
 ssh-keygen -t rsa (in the master vm)
 this will give a public key ahd private key file 
-Copying the  master vm public key which is .ssh/id_rsa.pub file to the node .ssh/authorized_keys (cat .ssh/id_rsa.pub 
-and copy and paste to node with opening file vi .ssh/authorized_keys and press i to insert)
-Vi etc/ansible/hosts
-Add 
+Copying the  master vm public key which is .ssh/id_rsa.pub file to the node .ssh/authorized_keys 
+cat .ssh/id_rsa.pub 
+and copy and paste to node with opening file 
+vi .ssh/authorized_keys and press i to insert, paste the key here and esc :wq to save and quit
+configure
+sudo vi /etc/ansible/hosts
+insert press i 
+in the beginning add the following
 [testservers]
 Ipaddress of node ( to find this go to node and type ifconfig)
 
@@ -77,6 +88,7 @@ Lampstack.yml
 Ansible-playbook lampstack.yml
 Go to the node ec2-xx-xxx-xx-xxx.compute-1.amazonaws.com
 You will see the apache server page
+
 Ansible-playbook deploy.yml
 Now you will see the ha ha first web page
 Hooray you have deployed your web page 
