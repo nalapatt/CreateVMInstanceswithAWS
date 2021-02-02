@@ -13,18 +13,23 @@ command n to clone a terminal
 connect to node vm  
 
 ssh-keygen -t rsa (in the master vm)
-this will give a public key ahd private key file 
-Copying the  master vm public key which is .ssh/id_rsa.pub file to the node .ssh/authorized_keys 
+enter enter just accept the default filenames and directories
+
+this will give a public key id_rsa.pub ahd private key file id_rsa
+Copy the  master vm public key which is .ssh/id_rsa.pub file to the node .ssh/authorized_keys 
 cat .ssh/id_rsa.pub 
-and copy and paste to node with opening file 
-vi .ssh/authorized_keys and press i to insert, paste the key here and esc :wq to save and quit
-configure
+select the whole key and Control C to copy  
+Go to the node VM
+rm .ssh/authorized_keys to remove the old key file 
+vi .ssh/authorized_keys and press i to insert, Ctrl V to paste the key from Master here and esc :wq to save and quit
+Go back to the master VM
+configure the localhost and remote hosts etc.
 sudo vi /etc/ansible/hosts
 insert press i 
 in the beginning add the following
 [testservers]
-Ipaddress of node ( to find this go to node and type ifconfig)
-
+xxx.xx.xx.xx  (Ipaddress of node, to find this go to node and type ifconfig the ip address will be displayed after inet: xxx.xx.xx.xx)
+esc :wq to save and quit
 
 Create these three files in the master 
 
