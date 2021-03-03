@@ -1,0 +1,35 @@
+Create 3 EC2 instances on AWS, one master and 2 nodes
+Select the Amazon Linux 2 ami machine and t2.micro
+In the security group
+Add Inbound Rule - 
+Add TCP Port 22, Add Custom TCP port 2377, Add Custom TCP port 7946, Add custom UDP port 7946 (for worker node connections), Add Custom UDP port 4789
+Add Outbound Rule - ( for the first one after you launch it, then go back and edit the outbound rules to add )
+Add All traffic - 0-65535 Custom, Add Custom TCP - 8080
+Save this security group configuration as Docker and use it for all 3 ec2 Instances
+Connect to these ec2 instances by cd/Downloads and then using the ssh command and the pem key that was created from the terminal,
+Use Control N to duplicate the terminals so you can have all of them open at the same time and connect to all of them
+
+install docker on all of them
+sudo yum install docker
+
+Once installed start
+sudo service docker start on all of them
+
+In the master
+sudo docker swarm init
+copy the command that was generated and run it in the node machines with sudo
+sudo node ls which will show the leader and the other workers
+
+vi docker-compose.yaml and add contents to it and save
+sudo docker stack deploy -c docker-compose.yaml docktest
+sudo docker service ls 
+sudo docker container ls
+this will show where the services have been deployed
+
+In the node
+copy the command that was generated in the master and run it in the node machines with sudo
+sudo docker container ls
+to see if the services have been deployed here
+
+thats it thats how easy it is to deploy docker services in docker swarm
+
