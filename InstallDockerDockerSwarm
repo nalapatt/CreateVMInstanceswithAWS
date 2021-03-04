@@ -10,10 +10,10 @@ Connect to these ec2 instances by cd/Downloads and then using the ssh command an
 Use Control N to duplicate the terminals so you can have all of them open at the same time and connect to all of them
 
 install docker on all of them
-sudo yum install docker
+- sudo yum install docker
 
-Once installed start
-sudo service docker start on all of them
+Once installed start on all of them
+- sudo service docker start 
 
 In the master
 sudo docker swarm init
@@ -33,3 +33,13 @@ to see if the services have been deployed here
 
 thats it thats how easy it is to deploy docker services in docker swarm
 
+if you want to install docker compose
+
+sudo curl -L https://github.com/docker/compose/releases/download/1.21.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+docker-compose --version
+to see if you have it installed
+yeah installed 
+now you can run
+sudo docker-compose up -d
