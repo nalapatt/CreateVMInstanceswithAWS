@@ -1,0 +1,35 @@
+config=/tmp/$( uuidgen ).yaml    
+file=/etc/hosts    
+export engine=docker 
+export mode=kubernetes 
+export os=ubuntu18 
+ 
+export calico=https://docs.projectcalico.org/v3.17/manifests/calico.yaml 
+export kube=kube-apiserver 
+export pod_network_cidr=192.168.0.0/16 
+export port=6443 
+
+role=leader
+
+######################################################################### 
+file=init-${mode}-${role}.sh						; 
+log=/tmp/${file}.log							; 
+######################################################################### 
+
+InstanceMaster1=$( ip route | awk '/eth0.*kernel/ && ! /docker0/ { print $9 }' ) 
+
+######################################################################### 
+config=/tmp/$( uuidgen ).yaml                                           ; 
+file=/etc/hosts                                                         ; 
+kubeconfig=/etc/kubernetes/admin.conf                                   ; 
+pattern=127.0.0.1.*localhost                                            ; 
+sleep=10                                                                ; 
+success='^Your Kubernetes control-plane has initialized successfully'   ; 
+######################################################################### 
+######################################################################### 
+grep ${InstanceMaster1}\ ${kube} ${file}                                \ 
+||                                                                      \ 
+echo ${InstanceMaster1} ${kube}                                         \ 
+|                                                                       \ 
+sudo tee --append ${file}                                               ; 
+######################################################################### 
