@@ -26,10 +26,71 @@ pattern=127.0.0.1.*localhost                                            ;
 sleep=10                                                                ; 
 success='^Your Kubernetes control-plane has initialized successfully'   ; 
 ######################################################################### 
+
+grep ${InstanceMaster1}\ ${kube} ${file} || echo ${InstanceMaster1} ${kube} |                                     
+sudo tee --append ${file};                                             
+
+cat /etc/hosts should give the output
+127.0.0.1 localhost 
+# The following lines are desirable for IPv6 capable hosts 
+::1 ip6-localhost ip6-loopback 
+fe00::0 ip6-localnet 
+ff00::0 ip6-mcastprefix 
+ff02::1 ip6-allnodes 
+ff02::2 ip6-allrouters 
+ff02::3 ip6-allhosts 
+172.31.47.244 kube-apiserver 
+
+To Enable kubelet
+
+sudo tee ${config} 0<<EOF 
+apiVersion: kubeadm.k8s.io/v1beta2 
+kind: ClusterConfiguration 
+controlPlaneEndpoint: "${kube}:${port}" 
+networking: 
+  podSubnet: ${pod_network_cidr} 
+--- 
+EOF 
+sudo kubeadm init --config $config --ignore-preflight-errors all --upload-certs 2>& 1 | tee -a $log
+
+Your Kubernetes control-plane has initialized successfully! 
+
+Then you can join any number of worker nodes by running the following on each as root: 
+
+copy the command you get and go to the worker nodes and run it here with sudo 
+
+check if kublet it enabled
+systemctl is-enabled kubelet
+
+ in the master
+ 
+mkdir -p $HOME/.kube 
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config 
+sudo chown $(id -u):$(id -g) $HOME/.kube/config 
+
 ######################################################################### 
-grep ${InstanceMaster1}\ ${kube} ${file}                                \ 
-||                                                                      \ 
-echo ${InstanceMaster1} ${kube}                                         \ 
-|                                                                       \ 
-sudo tee --append ${file}                                               ; 
+sudo kubectl apply                                                      \ 
+        --filename                                                      \ 
+                ${calico}                                               \ 
+        --kubeconfig                                                    \ 
+                ${kubeconfig}                                           \ 
+                                                                        ; 
 ######################################################################### 
+
+  sudo                                                            \ 
+                kubectl                                                 \ 
+                        --kubeconfig                                    \ 
+                                ${kubeconfig}                           \ 
+                        get                                             \ 
+                                no                                      ; 
+
+this will show you the master and all the nodes
+
+if you dont see it then 
+
+sudo tail $log 
+the output should be pasted with sudo in all the nodes and then you should see the master and all the nodes
+
+if you want to clean or reset the kubelet
+sudo kubeadm reset --force 
+--ignore-preflight-errors=all  ( to make a command run faster in the join command)
