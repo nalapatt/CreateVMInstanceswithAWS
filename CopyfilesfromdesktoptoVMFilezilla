@@ -28,7 +28,9 @@ Click “New Site”.
 
 Put the Amazon instance URL like ec2-54-166-128-20.compute-1.amazonaws.com in the “Host” box.
 
-Set “Protocol” as “SFTP”, “Logon Type” as “Normal”, “User” as “ubuntu” and leave “Password” as blank. Then click “Connect”.
+Set “Protocol” as “SFTP”, “Logon Type” as “Normal”, “User” as “ubuntu” [if the instance is ubuntu][ ec2-user if instance is amazon linux] 
+and leave “Password” as blank. 
+Then click “Connect”.
 
 There will be a dialogue box to ask you about “Unknown host key”, just click “Ok”.
 
