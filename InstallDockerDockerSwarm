@@ -9,8 +9,13 @@ Save this security group configuration as Docker and use it for all 3 ec2 Instan
 Connect to these ec2 instances by cd/Downloads and then using the ssh command and the pem key that was created from the terminal,
 Use Control N to duplicate the terminals so you can have all of them open at the same time and connect to all of them
 
-install docker on all of them
+install docker on all of them if using Linux
 - sudo yum install docker
+
+install docker on all of them if using Ubuntu
+sudo apt-get update
+sudo apt install docker.io
+docker --version
 
 Once installed start on all of them
 - sudo service docker start 
